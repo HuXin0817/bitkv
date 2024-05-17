@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package serve;
+option go_package = "./serve";
+
+message Nil {}
+
+message Pair {
+  string key = 1;
+  string value = 2;
+}
+
+message Key {
+  string key = 1;
+}
+
+message Value {
+  string value = 1;
+}
+
+service Serve {
+  rpc Put(Pair) returns (Nil);
+  rpc Get(Key)  returns (Value);
+}
+
+// go:generator goctl rpc protoc serve.proto --go_out=../bitkv-server --go-grpc_out=../bitkv-server --zrpc_out=../bitkv-server
